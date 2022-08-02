@@ -102,8 +102,8 @@ void Game::render()
 	// Render everything
 
 	this->renderBoard(this->window);
-	Symbol symbol(0.f, 0.f, false, this->cellSize, this->boardLineThickness, this->leftPadding, this->topPadding);
-	symbol.render(this->window);
+	Symbol symbol1(0.f, 0.f, false, this->cellSize, this->boardLineThickness, this->leftPadding, this->topPadding);
+	symbol1.render(this->window);
 
 	Symbol symbol2(1.f, 1.f, true, this->cellSize, this->boardLineThickness, this->leftPadding, this->topPadding);
 	symbol2.render(this->window);
