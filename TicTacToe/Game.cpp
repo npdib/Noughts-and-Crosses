@@ -11,7 +11,7 @@ void Game::initWindow()
 void Game::initVariables()
 {
 	this->boardSize = 400;
-	this->boardLineThickness = 15;
+	this->boardLineThickness = 5;
 	this->windowWidth = this->window->getSize().x;
 	this->windowHeight = this->window->getSize().y;
 	this->cellSize = (this->boardSize - 2 * (this->boardLineThickness)) / 3;
@@ -102,8 +102,11 @@ void Game::render()
 	// Render everything
 
 	this->renderBoard(this->window);
-	//Symbol symbol(0.f, 0.f, true, this->cellSize, this->boardLineThickness, this->leftPadding, this->topPadding);
-	//symbol.render(this->window);
+	Symbol symbol(0.f, 0.f, false, this->cellSize, this->boardLineThickness, this->leftPadding, this->topPadding);
+	symbol.render(this->window);
+
+	Symbol symbol2(1.f, 1.f, true, this->cellSize, this->boardLineThickness, this->leftPadding, this->topPadding);
+	symbol2.render(this->window);
 	
 	this->window->display();
 }

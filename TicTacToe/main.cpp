@@ -2,12 +2,11 @@
 
 
 
-int main()
+void main()
 {
 	Game game;
 
 	game.run();
 
 	// End of application
-	return 0;
 }

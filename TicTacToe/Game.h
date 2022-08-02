@@ -34,6 +34,7 @@ private:
 	void initVariables();
 	void initBoard();
 
+
 public:
 
 	// Constructors and Destructors

@@ -14,6 +14,9 @@ private:
 
 	sf::CircleShape circle;
 
+	sf::RectangleShape cross1;
+	sf::RectangleShape cross2;
+
 
 
 public:
