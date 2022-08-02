@@ -5,17 +5,19 @@
 void Game::initWindow()
 {
 	this->window = new sf::RenderWindow(sf::VideoMode(800, 600), "Tic Tac Toe", sf::Style::Close | sf::Style::Titlebar);
+	this->window->setFramerateLimit(60);
 }
 
 void Game::initVariables()
 {
-	this->boardSize = 500;
-	this->boardLineThickness = 20;
+	this->boardSize = 400;
+	this->boardLineThickness = 15;
 	this->windowWidth = this->window->getSize().x;
 	this->windowHeight = this->window->getSize().y;
 	this->cellSize = (this->boardSize - 2 * (this->boardLineThickness)) / 3;
 	this->leftPadding = (this->windowWidth - this->boardSize) / 2;
 	this->topPadding = (this->windowHeight - this->boardSize) / 2;
+
 }
 
 void Game::initBoard()
@@ -53,6 +55,7 @@ Game::~Game()
 
 void Game::run()
 {
+	
 	while (this->window->isOpen())
 	{
 		this->update();
@@ -99,6 +102,8 @@ void Game::render()
 	// Render everything
 
 	this->renderBoard(this->window);
+	//Symbol symbol(0.f, 0.f, true, this->cellSize, this->boardLineThickness, this->leftPadding, this->topPadding);
+	//symbol.render(this->window);
 	
 	this->window->display();
 }

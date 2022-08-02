@@ -1,10 +1,8 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Network.hpp>
+#include "Symbol.h"
+#include <vector>
+#include<iostream>
 
 
 class Game
@@ -25,6 +23,10 @@ private:
 	int cellSize;
 	int leftPadding;
 	int topPadding;
+
+	int board[3][3] = {{0,0,0}, {0,0,0}, {0,0,0}};
+
+	std::vector<Symbol> symbols;
 
 	// Private Functions
 
