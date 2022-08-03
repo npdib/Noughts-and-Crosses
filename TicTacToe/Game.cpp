@@ -18,6 +18,7 @@ void Game::initVariables()
 	this->cellSize = (this->boardSize - 2 * (this->boardLineThickness)) / 3;
 	this->leftPadding = (this->windowWidth - this->boardSize) / 2;
 	this->topPadding = (this->windowHeight - this->boardSize) / 2;
+	this->win = 0;
 
 }
 
@@ -36,6 +37,30 @@ void Game::initBoard()
 	this->rect4.setSize(sf::Vector2f(boardSize, boardLineThickness));
 	this->rect4.setPosition(this->leftPadding, this->topPadding + 2 * this->cellSize + this->boardLineThickness);
 
+}
+
+void Game::initFont()
+{
+	if (!this->font.loadFromFile("Fonts/Garamond.ttf")) {
+		std::cout << "ERROR::GAME::INITFONTS::Failed to load font!" << "\n";
+	}
+}
+
+void Game::initText()
+{
+	this->playerPrompt.setFont(this->font);
+	this->playerPrompt.setCharacterSize(48);
+	this->playerPrompt.setFillColor(sf::Color::Yellow);
+	this->playerPrompt.setString("NONE");
+	this->playerPrompt.setOutlineColor(sf::Color::White);
+	this->playerPrompt.setOutlineThickness(2.f);
+
+	this->winText.setFont(this->font);
+	this->winText.setCharacterSize(125);
+	this->winText.setFillColor(sf::Color::White);
+	this->winText.setString("NONE");
+	this->winText.setOutlineColor(sf::Color::White);
+	this->winText.setOutlineThickness(2.f);
 }
 
 void Game::getSection()
@@ -82,6 +107,8 @@ Game::Game()
 	this->initWindow();
 	this->initVariables();
 	this->initBoard();
+	this->initFont();
+	this->initText();
 }
 
 Game::~Game()
@@ -177,6 +204,44 @@ void Game::updateBoard()
 
 }
 
+void Game::updatePrompt()
+{
+
+	if (this->nought)
+	{
+		this->playerPrompt.setString("Noughts, it's your turn!");
+		this->playerPrompt.setFillColor(sf::Color(50, 50, 255));
+		
+
+	}
+	else
+	{
+		this->playerPrompt.setString("Crosses, it's your turn!");
+		this->playerPrompt.setFillColor(sf::Color(160, 32, 240));
+	}
+
+	this->playerPrompt.setPosition(sf::Vector2f((this->windowWidth - this->playerPrompt.getGlobalBounds().width) / 2, 30.f));
+}
+
+void Game::updateGameEndText()
+{
+	if (this->win == 1)
+	{
+		this->winText.setString("Noughts win !!");
+		this->winText.setFillColor(sf::Color(50, 50, 255));
+
+
+	}
+	else if (this->win == -1)
+	{
+		this->winText.setString("Crosses win !!");
+		this->winText.setFillColor(sf::Color(160, 32, 240));
+	}
+
+	this->winText.setPosition(sf::Vector2f((this->windowWidth - this->winText.getGlobalBounds().width) / 2, (this->windowHeight - this->winText.getGlobalBounds().height) / 3));
+
+}
+
 int Game::checkForWin()
 {
 	// check rows
@@ -227,18 +292,20 @@ void Game::update()
 
 		this->updateBoard();
 
-		int win = this->checkForWin();
+		this->updatePrompt();
 
-		switch (win)
+		this->win = this->checkForWin();
+
+		switch (this->win)
 		{
 		case 0:
 			break;
 		case 1:
-			std::cout << "Noughts wins !!\n";
+			//std::cout << "Noughts wins !!\n";
 			this->gameOver = true;
 			break;
 		case -1:
-			std::cout << "Crosses wins !! \n";
+			//std::cout << "Crosses wins !! \n";
 			this->gameOver = true;
 			break;
 		}
@@ -254,6 +321,16 @@ void Game::renderBoard(sf::RenderTarget* target)
 	target->draw(this->rect3);
 	target->draw(this->rect4);
 	
+}
+
+void Game::renderPrompt(sf::RenderTarget& target)
+{
+	target.draw(this->playerPrompt);
+}
+
+void Game::renderGameEndText(sf::RenderTarget& target)
+{
+	target.draw(this->winText);
 }
 
 void Game::renderHighlight(sf::RenderTarget* target)
@@ -275,6 +352,8 @@ void Game::render()
 
 	// Render everything
 
+	
+
 	this->renderBoard(this->window);
 
 	if (this->xSection != 0 && this->ySection != 0)
@@ -283,6 +362,15 @@ void Game::render()
 	}
 
 	this->renderSymbols(this->window);
+
+	this->renderPrompt(*this->window);
+
+	if (this->gameOver)
+	{
+		this->window->clear();
+		this->updateGameEndText();
+		this->renderGameEndText(*this->window);
+	}
 	
 	this->window->display();
 }

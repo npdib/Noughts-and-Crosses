@@ -22,6 +22,11 @@ private:
 
 	sf::RectangleShape highlight;
 
+	sf::Font font;
+	
+	sf::Text playerPrompt;
+	sf::Text winText;
+
 	bool mouseHeld;
 	bool nought = true;
 
@@ -38,6 +43,8 @@ private:
 
 	int board[3][3] = {{0,0,0}, {0,0,0}, {0,0,0}};
 
+	int win;
+
 	std::vector<Symbol> symbols;
 
 	// Private Functions
@@ -45,6 +52,8 @@ private:
 	void initWindow();
 	void initVariables();
 	void initBoard();
+	void initFont();
+	void initText();
 
 	void getSection();
 	void sectionHighlight();
@@ -67,11 +76,15 @@ public:
 
 	void updateMousePos();
 	void updateBoard();
+	void updatePrompt();
+	void updateGameEndText();
 	int checkForWin();
 	void update();
 
 
 	void renderBoard(sf::RenderTarget* target);
+	void renderPrompt(sf::RenderTarget& target);
+	void renderGameEndText(sf::RenderTarget& target);
 	void renderHighlight(sf::RenderTarget* target);
 	void renderSymbols(sf::RenderTarget* target);
 	void render();
