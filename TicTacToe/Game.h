@@ -22,6 +22,9 @@ private:
 
 	sf::RectangleShape highlight;
 
+	bool mouseHeld;
+	bool nought = true;
+
 	int boardSize;
 	int boardLineThickness;
 	int windowWidth;
@@ -67,6 +70,7 @@ public:
 
 	void renderBoard(sf::RenderTarget* target);
 	void renderHighlight(sf::RenderTarget* target);
+	void renderSymbols(sf::RenderTarget* target);
 	void render();
 
 };

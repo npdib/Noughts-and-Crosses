@@ -10,6 +10,7 @@ void Game::initWindow()
 
 void Game::initVariables()
 {
+	this->mouseHeld = false;
 	this->boardSize = 400;
 	this->boardLineThickness = 5;
 	this->windowWidth = this->window->getSize().x;
@@ -72,7 +73,6 @@ void Game::sectionHighlight()
 	this->highlight.setOutlineThickness(this->boardLineThickness);
 	this->highlight.setOutlineColor(sf::Color::Yellow);
 
-	std::cout << "made it\n";
 }
 
 //Constructors and Destructors
@@ -134,7 +134,44 @@ void Game::updateBoard()
 
 	if (this->xSection != 0 && this->ySection != 0)
 	{
+
+		
+			
+
 		this->sectionHighlight();
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			if (!this->mouseHeld)
+			{
+				this->mouseHeld = true;
+
+				if (this->board[this->ySection - 1][this->xSection - 1] == 0)
+				{
+					Symbol symbol(static_cast<float>(this->ySection - 1), static_cast<float>(this->xSection - 1), this->nought, this->cellSize, this->boardLineThickness, this->leftPadding, this->topPadding);
+					this->symbols.push_back(symbol);
+					this->nought = !this->nought;
+					if (this->nought)
+						this->board[this->ySection - 1][this->xSection - 1] = 1;
+					else
+						this->board[this->ySection - 1][this->xSection - 1] = -1;
+
+					for (size_t i = 0; i < 3; i++)
+					{
+						for (size_t j = 0; j < 3; j++)
+						{
+							std::cout << board[i][j];
+						}
+						std::cout << "\n";
+					}
+				}
+			}
+		}
+		else
+		{
+			this->mouseHeld = false;
+		}
+
 	}
 
 }
@@ -164,6 +201,14 @@ void Game::renderHighlight(sf::RenderTarget* target)
 	target->draw(this->highlight);
 }
 
+void Game::renderSymbols(sf::RenderTarget* target)
+{
+	for (auto& s : this->symbols)
+	{
+		s.render(target);
+	}
+}
+
 void Game::render()
 {
 	this->window->clear();
@@ -176,6 +221,8 @@ void Game::render()
 	{
 		this->renderHighlight(this->window);
 	}
+
+	this->renderSymbols(this->window);
 	
 	this->window->display();
 }
