@@ -49,6 +49,8 @@ private:
 	void getSection();
 	void sectionHighlight();
 
+	bool gameOver = false;
+
 public:
 
 	// Constructors and Destructors
@@ -65,6 +67,7 @@ public:
 
 	void updateMousePos();
 	void updateBoard();
+	int checkForWin();
 	void update();
 
 

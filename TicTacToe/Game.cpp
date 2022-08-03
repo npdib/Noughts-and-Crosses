@@ -150,20 +150,21 @@ void Game::updateBoard()
 				{
 					Symbol symbol(static_cast<float>(this->ySection - 1), static_cast<float>(this->xSection - 1), this->nought, this->cellSize, this->boardLineThickness, this->leftPadding, this->topPadding);
 					this->symbols.push_back(symbol);
-					this->nought = !this->nought;
 					if (this->nought)
 						this->board[this->ySection - 1][this->xSection - 1] = 1;
 					else
 						this->board[this->ySection - 1][this->xSection - 1] = -1;
 
-					for (size_t i = 0; i < 3; i++)
+					this->nought = !this->nought;
+
+					/*for (size_t i = 0; i < 3; i++)
 					{
 						for (size_t j = 0; j < 3; j++)
 						{
 							std::cout << board[i][j];
 						}
 						std::cout << "\n";
-					}
+					}*/
 				}
 			}
 		}
@@ -176,14 +177,73 @@ void Game::updateBoard()
 
 }
 
+int Game::checkForWin()
+{
+	// check rows
+	for (size_t i = 0; i < 3; i++)
+	{
+		if (this->board[i][0] == this->board[i][1] && this->board[i][0] == this->board[i][2])
+		{
+			if (this->board[i][0] != 0)
+				return this->board[i][0];
+		}
+	}
+
+	// check columns
+	for (size_t j = 0; j < 3; j++)
+	{
+		if (this->board[0][j] == this->board[1][j] && this->board[0][j] == this->board[2][j])
+		{
+			if (this->board[0][j] != 0)
+				return this->board[0][j];
+		}
+	}
+
+	// Check diagonal 1
+	if (this->board[0][0] == this->board[1][1] && this->board[0][0] == this->board[2][2])
+	{
+		if (this->board[0][0] != 0)
+			return this->board[0][0];
+	}
+	
+	// Check diagonal 1
+	if (this->board[2][0] == this->board[1][1] && this->board[2][0] == this->board[0][2])
+	{
+		if (this->board[2][0] != 0)
+			return this->board[2][0];
+	}
+
+}
+
 void Game::update()
 {
 
-	this->updateBoard();
-	this->updateMousePos();
+	this->pollEvents();
 	
 
-	this->pollEvents();	
+	if (!this->gameOver)
+	{
+		this->updateMousePos();
+
+		this->updateBoard();
+
+		int win = this->checkForWin();
+
+		switch (win)
+		{
+		case 0:
+			break;
+		case 1:
+			std::cout << "Noughts wins !!\n";
+			this->gameOver = true;
+			break;
+		case -1:
+			std::cout << "Crosses wins !! \n";
+			this->gameOver = true;
+			break;
+		}
+	}
+
 
 }
 
