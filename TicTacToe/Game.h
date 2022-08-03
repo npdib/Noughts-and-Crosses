@@ -3,6 +3,7 @@
 #include "Symbol.h"
 #include <vector>
 #include<iostream>
+#include<sstream>
 
 
 class Game
@@ -16,6 +17,9 @@ private:
 	sf::RectangleShape rect3;
 	sf::RectangleShape rect4;
 
+	sf::Vector2i mousePosWindow;
+	sf::Vector2f mousePos;
+
 	int boardSize;
 	int boardLineThickness;
 	int windowWidth;
@@ -23,6 +27,9 @@ private:
 	int cellSize;
 	int leftPadding;
 	int topPadding;
+
+	int xSection = 0;
+	int ySection = 0;
 
 	int board[3][3] = {{0,0,0}, {0,0,0}, {0,0,0}};
 
@@ -49,7 +56,10 @@ public:
 
 	void pollEvents();
 
+	void updateMousePos();
+	void updateBoard();
 	void update();
+	void getSection();
 
 
 	void renderBoard(sf::RenderTarget* target);

@@ -79,10 +79,50 @@ void Game::pollEvents()
 	}
 }
 
+void Game::updateMousePos()
+{
+	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
+	this->mousePos = this->window->mapPixelToCoords(this->mousePosWindow);
+
+	//std::cout << "Mouse pos:\t " << this->mousePos.x << ", " << this->mousePos.y << "\n";
+
+}
+
+void Game::updateBoard()
+{
+}
+
 void Game::update()
 {
+	this->updateMousePos();
+	this->getSection();
 
 	this->pollEvents();	
+
+}
+
+void Game::getSection()
+{
+
+	if (this->mousePos.x > this->leftPadding && this->mousePos.x < (this->leftPadding + this->cellSize))
+		this->xSection = 1;
+	else if (this->mousePos.x > (this->leftPadding + this->cellSize + this->boardLineThickness) && this->mousePos.x < (this->leftPadding + 2 * this->cellSize + this->boardLineThickness))
+		this->xSection = 2;
+	else if (this->mousePos.x > (this->leftPadding + 2 * this->cellSize + 2 * this->boardLineThickness) && this->mousePos.x < (this->leftPadding + 3 * this->cellSize + 2 * this->boardLineThickness))
+		this->xSection = 3;
+	else
+		this->xSection = 0;
+
+	if (this->mousePos.y > this->topPadding && this->mousePos.y < (this->topPadding + this->cellSize))
+		this->ySection = 1;
+	else if (this->mousePos.y > (this->topPadding + this->cellSize + this->boardLineThickness) && this->mousePos.y < (this->topPadding + 2 * this->cellSize + this->boardLineThickness))
+		this->ySection = 2;
+	else if (this->mousePos.y > (this->topPadding + 2 * this->cellSize + 2 * this->boardLineThickness) && this->mousePos.y < (this->topPadding + 3 * this->cellSize + 2 * this->boardLineThickness))
+		this->ySection = 3;
+	else
+		this->ySection = 0;
+
+	std::cout << this->ySection << ", " << this->xSection << "\n";
 
 }
 
@@ -102,11 +142,6 @@ void Game::render()
 	// Render everything
 
 	this->renderBoard(this->window);
-	Symbol symbol1(0.f, 0.f, false, this->cellSize, this->boardLineThickness, this->leftPadding, this->topPadding);
-	symbol1.render(this->window);
-
-	Symbol symbol2(1.f, 1.f, true, this->cellSize, this->boardLineThickness, this->leftPadding, this->topPadding);
-	symbol2.render(this->window);
 	
 	this->window->display();
 }
