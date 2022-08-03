@@ -8,7 +8,7 @@ void Game::initWindow()
 	this->window->setFramerateLimit(60);
 }
 
-void Game::initVariables()
+void Game::initVariables(sf::Font sentFont)
 {
 	this->mouseHeld = false;
 	this->boardSize = 400;
@@ -19,6 +19,7 @@ void Game::initVariables()
 	this->leftPadding = (this->windowWidth - this->boardSize) / 2;
 	this->topPadding = (this->windowHeight - this->boardSize) / 2;
 	this->win = 0;
+	this->font = sentFont;
 
 }
 
@@ -37,13 +38,6 @@ void Game::initBoard()
 	this->rect4.setSize(sf::Vector2f(boardSize, boardLineThickness));
 	this->rect4.setPosition(this->leftPadding, this->topPadding + 2 * this->cellSize + this->boardLineThickness);
 
-}
-
-void Game::initFont()
-{
-	if (!this->font.loadFromFile("Fonts/Garamond.ttf")) {
-		std::cout << "ERROR::GAME::INITFONTS::Failed to load font!" << "\n";
-	}
 }
 
 void Game::initText()
@@ -102,12 +96,11 @@ void Game::sectionHighlight()
 
 //Constructors and Destructors
 
-Game::Game()
+Game::Game(sf::Font font)
 {
 	this->initWindow();
-	this->initVariables();
+	this->initVariables(font);
 	this->initBoard();
-	this->initFont();
 	this->initText();
 }
 

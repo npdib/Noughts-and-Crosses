@@ -3,7 +3,7 @@
 #include "Symbol.h"
 #include <vector>
 #include<iostream>
-#include<sstream>
+
 
 
 class Game
@@ -50,9 +50,8 @@ private:
 	// Private Functions
 
 	void initWindow();
-	void initVariables();
+	void initVariables(sf::Font font);
 	void initBoard();
-	void initFont();
 	void initText();
 
 	void getSection();
@@ -63,7 +62,7 @@ private:
 public:
 
 	// Constructors and Destructors
-	Game();
+	Game(sf::Font font);
 	virtual ~Game();
 
 	sf::Event sfmlEvent;
@@ -90,4 +89,3 @@ public:
 	void render();
 
 };
-
