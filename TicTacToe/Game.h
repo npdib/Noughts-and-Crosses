@@ -20,6 +20,8 @@ private:
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePos;
 
+	sf::RectangleShape highlight;
+
 	int boardSize;
 	int boardLineThickness;
 	int windowWidth;
@@ -41,6 +43,8 @@ private:
 	void initVariables();
 	void initBoard();
 
+	void getSection();
+	void sectionHighlight();
 
 public:
 
@@ -59,10 +63,10 @@ public:
 	void updateMousePos();
 	void updateBoard();
 	void update();
-	void getSection();
 
 
 	void renderBoard(sf::RenderTarget* target);
+	void renderHighlight(sf::RenderTarget* target);
 	void render();
 
 };
