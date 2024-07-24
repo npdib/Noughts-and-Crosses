@@ -234,7 +234,7 @@ void Game::updateGameEndText()
 	else if (this->win == 3)
 	{
 		this->winText.setString("It's a draw !!");
-		this->winText.setFillColor(sf::Color(160, 32, 240));
+		this->winText.setFillColor(sf::Color::Green);
 	}
 
 	this->winText.setPosition(sf::Vector2f((this->windowWidth - this->winText.getGlobalBounds().width) / 2, (this->windowHeight - this->winText.getGlobalBounds().height) / 3));
@@ -392,7 +392,6 @@ void Game::render()
 	{
 		this->window->clear();
 		this->updateGameEndText();
-		std::cout << this->win;
 		this->renderGameEndText(*this->window);
 	}
 	
