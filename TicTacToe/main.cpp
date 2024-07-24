@@ -7,8 +7,8 @@
 int main()
 {
 
-	HWND hWnd = GetConsoleWindow();
-	ShowWindow(hWnd, SW_HIDE);
+	//HWND hWnd = GetConsoleWindow();
+	//ShowWindow(hWnd, SW_HIDE);
 
 	sf::Font font;
 	font.loadFromMemory(&Garamond_ttf, Garamond_ttf_len);

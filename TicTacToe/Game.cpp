@@ -231,6 +231,12 @@ void Game::updateGameEndText()
 		this->winText.setFillColor(sf::Color(160, 32, 240));
 	}
 
+	else if (this->win == 3)
+	{
+		this->winText.setString("It's a draw !!");
+		this->winText.setFillColor(sf::Color(160, 32, 240));
+	}
+
 	this->winText.setPosition(sf::Vector2f((this->windowWidth - this->winText.getGlobalBounds().width) / 2, (this->windowHeight - this->winText.getGlobalBounds().height) / 3));
 
 }
@@ -271,6 +277,23 @@ int Game::checkForWin()
 			return this->board[2][0];
 	}
 
+	// Check for draw
+
+	bool draw = true;
+	for (size_t i = 0; i < 3; i++)
+	{
+		for (size_t j = 0; j < 3; j++)
+		{
+			if (board[i][j] == 0)
+				draw = false;
+		}
+
+	}
+
+	if (draw)
+		return 3;
+
+	return 0;
 }
 
 void Game::update()
@@ -289,6 +312,10 @@ void Game::update()
 
 		this->win = this->checkForWin();
 
+		if (this->win != 0)
+			this->gameOver = true;
+
+		/*
 		switch (this->win)
 		{
 		case 0:
@@ -301,7 +328,10 @@ void Game::update()
 			//std::cout << "Crosses wins !! \n";
 			this->gameOver = true;
 			break;
+		case 3:
+
 		}
+		*/
 	}
 
 
@@ -362,6 +392,7 @@ void Game::render()
 	{
 		this->window->clear();
 		this->updateGameEndText();
+		std::cout << this->win;
 		this->renderGameEndText(*this->window);
 	}
 	
